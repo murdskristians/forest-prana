@@ -1,60 +1,99 @@
-import { Box, Divider, Typography } from '@mui/material';
-import Hero from './components/Hero';
+import { useCallback, useEffect, useState } from 'react';
+import { Box } from '@mui/material';
+import { catalogById, isCategoryId, type CategoryFilter } from './lib/catalog';
+import { scrollToId } from './lib/format';
 import About from './components/About';
-import CatalogOverview from './components/CatalogOverview';
-import CategoryIndex from './components/CategoryIndex';
-import ProductCard from './components/ProductCard';
-import Vinegars from './components/Vinegars';
-import Contacts from './components/Contacts';
-import { Delivery, Terms } from './components/InfoSections';
-import { categories, citi, oximeli, ziedes, type Product } from './data/products';
-
-const divider = <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)', mx: 'auto', maxWidth: 1100 }} />;
-
-function ProductList({ products, alternate }: { products: Product[]; alternate?: boolean }) {
-  return (
-    <>
-      {products.map((p, i) => (
-        <Box key={p.id}>
-          {i > 0 && divider}
-          <ProductCard product={p} imageRight={alternate && i % 2 === 1} />
-        </Box>
-      ))}
-    </>
-  );
-}
+import Catalog from './components/Catalog';
+import Footer from './components/Footer';
+import Hero from './components/Hero';
+import OrderDrawer, { MobileOrderDock } from './components/OrderDrawer';
+import Policies from './components/Policies';
+import ProductDialog from './components/ProductDialog';
+import SiteHeader from './components/SiteHeader';
+import { palette } from './theme';
 
 export default function App() {
+  const [filter, setFilter] = useState<CategoryFilter>('all');
+  const [query, setQuery] = useState('');
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [orderOpen, setOrderOpen] = useState(false);
+
+  useEffect(() => {
+    const apply = () => {
+      const id = window.location.hash.replace(/^#/, '');
+      if (isCategoryId(id)) {
+        setFilter(id);
+        setQuery('');
+        scrollToId('katalogs');
+      }
+      setActiveId(catalogById.has(id) ? id : null);
+    };
+    window.addEventListener('hashchange', apply);
+    window.addEventListener('popstate', apply);
+    apply();
+    return () => {
+      window.removeEventListener('hashchange', apply);
+      window.removeEventListener('popstate', apply);
+    };
+  }, []);
+
+  const openOrder = useCallback(() => {
+    setOrderOpen(true);
+    setActiveId(null);
+    const id = window.location.hash.replace(/^#/, '');
+    if (catalogById.has(id)) {
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#katalogs`);
+    }
+  }, []);
+
+  const openProduct = useCallback((id: string) => {
+    setOrderOpen(false);
+    setActiveId(id);
+    const nextHash = `#${id}`;
+    if (window.location.hash !== nextHash) {
+      window.history.pushState({ product: id }, '', `${window.location.pathname}${window.location.search}${nextHash}`);
+    }
+  }, []);
+
+  const closeProduct = useCallback(() => {
+    setActiveId(null);
+    const id = window.location.hash.replace(/^#/, '');
+    if (catalogById.has(id)) {
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#katalogs`);
+    }
+  }, []);
+
   return (
-    <Box component="main">
-      <Hero />
-      <About />
-      <CatalogOverview />
-
-      <CategoryIndex {...categories.oximeli} products={oximeli} columns={3} />
-      <ProductList products={oximeli} />
-
-      <CategoryIndex {...categories.ziedes} products={ziedes} columns={2} serif />
-      <ProductList products={ziedes} />
-
-      {divider}
-      <Vinegars />
-
-      <CategoryIndex {...categories.citi} products={citi} columns={2} serif />
-      <ProductList products={citi} alternate />
-
-      {divider}
-      <Contacts />
-      {divider}
-      <Terms />
-      {divider}
-      <Delivery />
-
-      <Box component="footer" sx={{ bgcolor: '#000', py: 1.5, textAlign: 'center' }}>
-        <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-          © {new Date().getFullYear()} Forest Prana · Rāmava, Latvija
-        </Typography>
+    <>
+      <Box
+        component="a"
+        href="#saturs"
+        sx={{
+          position: 'absolute',
+          left: 8,
+          top: -48,
+          zIndex: 40,
+          bgcolor: palette.cream,
+          color: palette.ink,
+          px: 2,
+          py: 1,
+          borderRadius: 1,
+          '&:focus': { top: 8 },
+        }}
+      >
+        Uz saturu
       </Box>
-    </Box>
+      <SiteHeader onOpenOrder={openOrder} />
+      <Box component="main" id="saturs" tabIndex={-1} sx={{ outline: 'none' }}>
+        <Hero />
+        <Catalog filter={filter} query={query} onFilter={setFilter} onQuery={setQuery} onOpen={openProduct} />
+        <About />
+        <Policies />
+      </Box>
+      <Footer />
+      <ProductDialog productId={activeId} onClose={closeProduct} onOpenOrder={openOrder} />
+      <OrderDrawer open={orderOpen} onClose={() => setOrderOpen(false)} />
+      <MobileOrderDock hidden={Boolean(activeId) || orderOpen} onOpen={openOrder} />
+    </>
   );
 }
