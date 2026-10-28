@@ -1,0 +1,27 @@
+plugins = []
+headers = []
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "C:\\Users\\murds\\OneDrive\\Desktop\\Prog-projekti\\forest-prana\\dist"
+publishOrigin = "ui"
+commandOrigin = "ui"
+command = "pnpm run build"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
