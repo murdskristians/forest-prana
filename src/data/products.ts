@@ -72,7 +72,6 @@ export const oximeli: Product[] = [
     id: 'kanadas-zeltgalvites-oximels',
     name: 'Kanādas zeltgalvītes oximels',
     price: 7,
-    soldOut: true,
     image: m('3cebd604bce992ccbdc3114c1dcccb77.jpg'),
     volume: '200ml',
     description:
@@ -82,6 +81,7 @@ export const oximeli: Product[] = [
     id: 'kerpju-oximels',
     name: 'Ķērpju oximels',
     price: 7,
+    soldOut: true,
     image: m('0b612b6a531f63463ab525562a259b75.jpg'),
     volume: '200ml',
     description:
@@ -91,7 +91,6 @@ export const oximeli: Product[] = [
     id: 'eglu-oximels',
     name: 'Egļu oximels',
     price: 7,
-    soldOut: true,
     image: m('d971b53edaef41318e8069758c6cb3e6.jpg'),
     volume: '200ml',
     description:
@@ -141,6 +140,7 @@ export const oximeli: Product[] = [
     id: 'uguns-oximels',
     name: 'Uguns oximels',
     price: 7,
+    soldOut: true,
     image: m('ee62462c7365266423e95faaa52745be.png'),
     volume: '200ml',
     description:

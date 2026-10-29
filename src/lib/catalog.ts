@@ -28,7 +28,7 @@ export const categoryMeta: { id: CategoryId; label: string; blurb: string }[] = 
   {
     id: 'oximeli',
     label: 'Oximeļi',
-    blurb: 'Medus un etiķa dzērieni no ogām, skujām un ārstniecības augiem. Visi ir 200 ml un maksā 7 €.',
+    blurb: 'Oksimels ir sens dabīgs eliksīrs, ko gatavo no medus, dabīgā etiķa un ārstniecības augiem. Šo sastāvdaļu apvienojums ļauj iegūt aromātisku augu izvilkumu, ko var baudīt, atšķaidot ūdenī.',
   },
   {
     id: 'etiki',
