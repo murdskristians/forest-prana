@@ -33,12 +33,12 @@ export const categoryMeta: { id: CategoryId; label: string; blurb: string }[] = 
   {
     id: 'etiki',
     label: 'Etiķi',
-    blurb: 'Augļu etiķi, visi 4 €. Labvēlīgā ietekme ir kopīga visiem — tā ir zem filtriem.',
+    blurb: 'Dabīgs etiķis top dabiskā rūgšanas procesā no augļiem un ogām. Tas ir vērtīgs palīgs virtuvē, augu izvilkumu gatavošanā un ikdienas saimniecībā.',
   },
   {
     id: 'ziedes',
     label: 'Ziedes',
-    blurb: 'Ar rokām vārītas ziedes ādas, vēnu un locītavu kopšanai. Tilpums 30 vai 50 ml.',
+    blurb: 'Dabīgas ziedes gatavo no bišu vaska, augu eļļām un ārstniecības augiem. Tās nesatur sintētiskas piedevas un ķīmiju. Ziedes baro un mitrina sausu vai bojātu ādu, veicina tās dabīgos atjaunošanās procesus, palīdz mazināt iekaisumus un sniedz atbalstu veselībai.',
   },
   {
     id: 'citi',
@@ -128,21 +128,19 @@ function slug(name: string) {
     .replace(/^-|-$/g, '');
 }
 
-const vinegarNote = 'Augļu etiķis. Labvēlīgā ietekme visiem etiķiem ir kopīga.';
-
 const vinegars: CatalogItem[] = etiki.map((vinegar) => {
-  const parsed = parseDescription(vinegarNote);
+  const parsed = parseDescription('');
   return {
     id: slug(vinegar.name),
     name: vinegar.name,
     price: vinegar.price,
     image: vinegar.image,
-    description: vinegarNote,
+    description: '',
     soldOut: vinegar.soldOut,
     category: 'etiki',
     benefits: etikiBenefits,
     parsed,
-    excerpt: vinegarNote,
+    excerpt: '',
   };
 });
 
