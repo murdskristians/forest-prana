@@ -26,7 +26,7 @@ export const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61555982821
 export const images = {
   hero: m('8d6a8b2d15d74d9e6e36e9af7405e198.jpg'),
   logo: m('ab4ba70a5d063fd74509d1c717754858.png'),
-  about: m('d299a8280d87f7a607c66d221f730f83.jpg'),
+  about: m('d399a8280d87f7a607c66d221f730f83.jpg'),
   iconCatalog: m('8c79903d2508eff32e8bbece43e0e327.jpg'),
   iconAbout: m('8afe1f7c761f216fdf37c28c575cf9b6.png'),
   iconPhone: m('d07c912b441899c3c3b3c49eb3b42aa1.jpg'),
