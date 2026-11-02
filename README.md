@@ -45,7 +45,7 @@ Everything the shop sells is in [src/data/products.ts](src/data/products.ts):
 - Products live in the `oximeli`, `ziedes` and `citi` arrays. Vinegars are in `etiki`, along with the `etikiBenefits` text.
 - Each product has `id`, `name`, `price` (EUR), `image`, `description` and optionally `volume`. The `id` is also used as the URL hash and the order key, so keep it unique and stable.
 - Set `soldOut: true` to show the "Pārdots" badge and block ordering.
-- Reference images with `m('<filename>')`. Use a filename that exists on the Canva media host (or drop the file into `public/media/`) so `fetch-assets` finds it.
+- Reference images with `m('<category>/<product-id>.<ext>')`, e.g. `m('oximeli/piladzu-oximels.jpg')`. Images live in `public/media/<category>/` (`oximeli`, `etiki`, `ziedes`, `citi`; site-wide images in `site/`), named after the product. Drop the file there. If it should be downloaded from the Canva host instead, add a `"<local path>": "<canva filename>"` entry to [scripts/media-map.json](scripts/media-map.json) so `fetch-assets` can find it.
 - Contact details (`PHONE`, `WHATSAPP_URL`, `INSTAGRAM_URL`, `FACEBOOK_URL`) and category titles and backgrounds (`categories`) are in the same file.
 
 New products appear in the catalog and order flow automatically.
